@@ -11,9 +11,9 @@ section .data
 	Pos_texto2 db "O idade é: ",0
 	Pos_texto2Tam equ $ - Pos_texto2
 	
-	Menu_Texto db "Digite 1 para escrever o  nome: ",0
+	Menu_Texto db "Digite 1 para escrever o  nome ",10,0
 	TamMenuOpc1 equ $ - Menu_Texto
-	Menu_Texto2 db "Digite 2 para escrever a idade: ",0
+	Menu_Texto2 db "Digite 2 para escrever a idade",10,"->",0
 	TamMenuOpc2 equ $ - Menu_Texto2
 	
 	Pula_linha db 10,10,0
@@ -39,6 +39,12 @@ _start:
 	mov rdx, TamMenuOpc1
 	syscall
 	
+	mov rax, 1
+	mov rdi, 1
+	mov rsi, Menu_Texto2
+	mov rdx, TamMenuOpc2
+	syscall
+	
 	mov rax, 0
 	mov rdi, 0
 	mov rsi, menu_opcao
@@ -51,23 +57,11 @@ _start:
 	cmp  al, 1
 	je _RecebeValores	
 	
-	
-	mov rax, 1
-	mov rdi, 1
-	mov rsi, Menu_Texto2
-	mov rdx, TamMenuOpc2
-	syscall
-	
-	mov rax, 0
-	mov rdi, 0
-	mov rsi, menu_opcao
-	mov rdx, TamMenuOpc2
-	syscall
-	
-	mov al, [menu_opcao]
-	sub al, '0'
 	cmp  al, 2
-	je _Apresentacao
+	je _Apresentacao	
+
+	
+
 	
 	call _Finalizacao
 	
@@ -150,3 +144,4 @@ _Finalizacao:
 	mov rax, 60
 	mov rdi, 0
 	syscall
+	
